@@ -18,4 +18,8 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     textTransform: "uppercase",
   },
+  disabled: {
+    backgroundColor: 'gray',
+    borderColor: 'gray',
+  },
 });

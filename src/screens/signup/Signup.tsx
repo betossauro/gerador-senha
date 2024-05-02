@@ -7,9 +7,15 @@ import AppLink from "../../components/appLink/AppLink";
 
 import AppTextFormPassword from "../../components/appTextForm/AppTextFormPassword";
 import AppButtonSignin from "../../components/appButtonSignin/AppButtonRedirect";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Signup({ navigation }) {
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const isButtonDisabled = !nome || !email || !password || !confirmPassword;
   return (
     <View style={styles.container}>
       <View>
@@ -20,7 +26,7 @@ export default function Signup({ navigation }) {
       </View>
       <View style={styles.buttons}>
         <AppTextForm
-          placeholder="Digite seu nome"
+          value={nome} onChangeText={setNome} placeholder="Digite seu nome" 
         />
       </View>
       <View style={styles.labelContainer}>
@@ -28,7 +34,7 @@ export default function Signup({ navigation }) {
       </View>
       <View style={styles.buttons}>
         <AppTextForm
-          placeholder="nome@email.com"
+          value={email} onChangeText={setEmail} placeholder="nome@email.com"
         />
       </View>
       <View style={styles.labelContainer}>
@@ -36,7 +42,7 @@ export default function Signup({ navigation }) {
       </View>
       <View style={styles.buttons}>
         <AppTextFormPassword
-          placeholder="Digite sua senha"
+          value={password} onChangeText={setPassword} placeholder="Digite sua senha"
         />
       </View>
       <View style={styles.labelContainer}>
@@ -44,10 +50,10 @@ export default function Signup({ navigation }) {
       </View>
       <View style={styles.buttons}>
         <AppTextFormPassword
-          placeholder="Confirme sua senha"
+          value={confirmPassword} onChangeText={setConfirmPassword} placeholder="Confirme sua senha"
         />
       </View>
-        <AppButtonSignin text="Registrar" navigation={navigation} route="Signin" ></AppButtonSignin>
+        <AppButtonSignin text="Registrar" navigation={navigation} route="Signin" disabled={isButtonDisabled} ></AppButtonSignin>
       <View style={styles.buttons}>
       </View>
     </View>

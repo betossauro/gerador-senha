@@ -18,7 +18,7 @@ export default function AppTextInput({
       placeholder={placeholder}
       value={value}
       editable={editable}
-      placeholderTextColor="white"
+      placeholderTextColor="#0072BB"
       style={styles.input}
     />
   );

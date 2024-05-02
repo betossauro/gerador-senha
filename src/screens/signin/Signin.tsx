@@ -5,11 +5,16 @@ import AppTitle from "../../components/appTitle/AppTitle";
 import AppTextForm from "../../components/appTextForm/AppTextForm";
 import AppLink from "../../components/appLink/AppLink";
 
-import React from "react";
+import React, { useState } from "react";
 import AppTextFormPassword from "../../components/appTextForm/AppTextFormPassword";
 import AppButtonSignin from "../../components/appButtonSignin/AppButtonRedirect";
 
 export default function Signin({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const isButtonDisabled = !email || !password;
+
   return (
     <View style={styles.container}>
       <View>
@@ -20,7 +25,7 @@ export default function Signin({ navigation }) {
       </View>
       <View style={styles.buttons}>
         <AppTextForm
-          placeholder="nome@email.com"
+          value={email} onChangeText={setEmail} placeholder="nome@email.com"
         />
       </View>
       <View style={styles.labelContainer}>
@@ -28,10 +33,15 @@ export default function Signin({ navigation }) {
       </View>
       <View style={styles.buttons}>
         <AppTextFormPassword
-          placeholder="Digite sua senha"
+          value={password}  onChangeText={setPassword} placeholder="Digite sua senha"
         />
       <AppLink navigation={navigation} route="Signup" text="Não possui conta? Crie agora." />
-        <AppButtonSignin text="Entrar" navigation={navigation} route="Home" ></AppButtonSignin>
+      <AppButtonSignin
+        text="Entrar"
+        navigation={navigation}
+        route="Home"
+        disabled={isButtonDisabled}
+      />
       </View>
       <View style={styles.buttons}>
       </View>

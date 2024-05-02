@@ -1,19 +1,21 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  input: {
-    backgroundColor: "#f3f3f3",
-    width: "100%",
+  container: {
+    backgroundColor: "#0072BB",
+    width: 220,
     borderRadius: 4,
     borderColor: "#0072BB",
     borderWidth: 1,
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 8,
-    marginBottom: 6,
-    fontSize: 18,
-    letterSpacing: 4,
-    color: "#0072BB",
+    marginBottom: 10,
+  },
+  text: {
+    fontSize: 14,
+    color: "white",
     textAlign: "center",
     fontWeight: "bold",
+    textTransform: "uppercase",
   },
 });

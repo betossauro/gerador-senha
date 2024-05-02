@@ -2,14 +2,17 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   input: {
-    backgroundColor: "#f2f2f2",
-    width: "100%",
+    backgroundColor: "#f3f3f3",
+    width: 220,
     borderRadius: 4,
     borderColor: "#0072BB",
     borderWidth: 1,
     paddingVertical: 8,
     paddingHorizontal: 8,
-    fontSize: 16,
-    color: "black",
+    marginBottom: 16,
+    fontSize: 18,
+    color: "#0072BB",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });

@@ -2,17 +2,19 @@ import { TextInput } from "react-native";
 import { styles } from "./AppTextFormStyle";
 import React from "react";
 
-interface AppTextInputProps {
+interface AppTextFormProps {
   value?: string;
   placeholder?: string;
   editable?: boolean;
+  onChangeText?: (text: string) => void;
 }
 
-export default function AppTextInput({
+export default function AppTextForm({
   placeholder,
   value,
   editable = true,
-}: AppTextInputProps) {
+  onChangeText,
+}: AppTextFormProps) {
   return (
     <TextInput
       placeholder={placeholder}
@@ -20,6 +22,7 @@ export default function AppTextInput({
       editable={editable}
       placeholderTextColor="white"
       style={styles.input}
+      onChangeText={onChangeText}
     />
   );
 }
