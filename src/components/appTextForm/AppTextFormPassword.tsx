@@ -20,7 +20,7 @@ export default function AppTextFormPasword({
       placeholder={placeholder}
       value={value}
       editable={editable}
-      placeholderTextColor="white"
+      placeholderTextColor="gray"
       secureTextEntry={true}
       style={styles.input}
       onChangeText={onChangeText}
