@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, Alert } from "react-native";
 import { styles } from "./SignupStyle";
 
 import AppTitle from "../../components/appTitle/AppTitle";
@@ -8,12 +8,32 @@ import AppLink from "../../components/appLink/AppLink";
 import AppTextFormPassword from "../../components/appTextForm/AppTextFormPassword";
 import AppButtonSignin from "../../components/appButtonSignin/AppButtonRedirect";
 import React, { useState } from "react";
+import axios from 'axios';
 
 export default function Signup({ navigation }) {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignup = async () => {
+    if (password !== confirmPassword) {
+      Alert.alert('Erro', 'As senhas não coincidem');
+      return;
+    }
+
+    try {
+      await axios.post('http://localhost:3000/api/signup', {
+        nome,
+        email,
+        password,
+        confirmPassword
+      });
+      navigation.navigate('Signin');
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível cadastrar o usuário');
+    }
+  };
 
   const isButtonDisabled = !nome || !email || !password || !confirmPassword;
   return (
@@ -53,7 +73,7 @@ export default function Signup({ navigation }) {
           value={confirmPassword} onChangeText={setConfirmPassword} placeholder="Confirme sua senha"
         />
       </View>
-        <AppButtonSignin text="Registrar" navigation={navigation} route="Signin" disabled={isButtonDisabled} ></AppButtonSignin>
+        <AppButtonSignin text="Registrar" onPress={handleSignup} navigation={navigation} route="Signin" disabled={isButtonDisabled} ></AppButtonSignin>
       <View style={styles.buttons}>
       </View>
     </View>

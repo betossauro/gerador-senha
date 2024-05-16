@@ -5,14 +5,15 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 interface AppButtonProps {
   text: string;
-  route: string;
-  navigation: StackNavigationProp<any, any>;
+  onPress?: () => void; 
   disabled: boolean;
+  navigation?: any; 
+  route?: string; 
 }
 
-export default function AppButtonSignin({ text, route, navigation, disabled }: AppButtonProps) {
+export default function AppButtonSignin({ text, onPress, disabled }: AppButtonProps) {
   return (
-    <Pressable onPress={() => navigation.navigate(route)} style={[styles.container, disabled ? styles.disabled : null]} disabled={disabled}>
+    <Pressable onPress={onPress} style={[styles.container, disabled ? styles.disabled : null]} disabled={disabled}>
       <Text style={styles.text}>{text}</Text>
     </Pressable>
   );

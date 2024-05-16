@@ -20,7 +20,8 @@ import { stylesModal } from "../../components/appModal/AppModalStyle";
 import HistoryData from "../history/HistoryData";
 import { storeData } from '../../utils/localStorage';
 
-export default function Home({ navigation }) {
+export default function Home({ route, navigation }) {
+  const { userId } = route.params;
   const [password, setPassword] = useState("");
   const [visibleModal, setVisibleModal] = useState(false);
   const [nomeApp, setNomeApp] = useState("");
@@ -40,7 +41,7 @@ export default function Home({ navigation }) {
   };
 
   const handleCreate = async () => {
-    await HistoryData.addEntry(nomeApp, password);
+    await HistoryData.addEntry(nomeApp, password, userId);
     storeData({password: password, nomeApp: nomeApp});
     alert("Senha salva!");
     setVisibleModal(false);
@@ -82,7 +83,12 @@ export default function Home({ navigation }) {
         <AppButton action={handlePassword} text="gerar" />
         <AppButton action={saveNewPassword} text="salvar" />
         <AppButton action={copyPassword} text="copiar" />
-        <AppLink navigation={navigation} route="History" text="Ver Senhas" />
+        <AppLink 
+          navigation={navigation} 
+          route="History" 
+          onPress={() => navigation.navigate('HistoryScreen', { userId })}
+          text="Ver Senhas" 
+        />
       </View>
     </View>
   );

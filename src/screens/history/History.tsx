@@ -8,47 +8,45 @@ import * as Clipboard from "expo-clipboard";
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 
-export default function HistoryScreen() {
+export default function HistoryScreen({ route }) {
+  const { userId } = route.params;
   const [data, setData] = useState([]);
   const [showPassword, setShowPassword] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      const history = await HistoryData.getEntries();
-      const localStorageData = await getData();
-      if (localStorageData && !history.some(item => item.nomeApp === localStorageData.nomeApp && item.password === localStorageData.password)) {
-        history.push(localStorageData); 
-      }
+      const history = await HistoryData.getEntries(userId);
       setData(history);
     };
     fetchData();
-  }, []);
+  }, [userId]);
 
-  const renderItem = ({ item, index }) => (
+  const handleRemove = async (id) => {
+    await HistoryData.removeEntry(userId, id);
+    const newData = data.filter(item => item.id !== id);
+    setData(newData);
+  };
+
+
+  const renderItem = ({ item }) => (
     <View style={styles.passwords}>
       <View>
         <Text style={styles.text}>{item.nomeApp}</Text>
-        {showPassword[index] ? <Text style={styles.textPassword}>{item.password}</Text> : <Text>{'*'.repeat(item.password.length)}</Text>}
+        {showPassword[item.id] ? <Text style={styles.textPassword}>{item.password}</Text> : <Text>{'*'.repeat(item.password.length)}</Text>}
       </View>
       <View style={{ flexDirection: 'row', gap: 20 }}>
-        <Pressable onPress={() => handleShowPassword(index)}>
-          <IconMaterial name={showPassword[index] ? "eye-off" : "eye"} size={30} color="#0072BB" />
+        <Pressable onPress={() => handleShowPassword(item.id)}>
+          <IconMaterial name={showPassword[item.id] ? "eye-off" : "eye"} size={30} color="#0072BB" />
         </Pressable>
         <Pressable onPress={() => Clipboard.setString(item.password)}>
           <IconAnt name="copy1" size={30} color="#000" />
         </Pressable>
-        <Pressable onPress={() => handleRemove(index)}>
+        <Pressable onPress={() => handleRemove(item.id)}>
           <IconMaterial name="delete" size={30} color="#ac2f10" />
         </Pressable>
       </View>
     </View>
   );
-
-  const handleRemove = async (index) => {
-    await HistoryData.removeEntry(index);
-    const newData = await HistoryData.getEntries();
-    setData(newData);
-  };
 
   const handleShowPassword = (index) => {
     setShowPassword(prevState => ({ ...prevState, [index]: !prevState[index] }));
@@ -62,7 +60,7 @@ export default function HistoryScreen() {
       <FlatList 
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={item => item.id.toString()}
       />
     </View>
   );

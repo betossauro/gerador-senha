@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, Alert } from "react-native";
 import { styles } from "./SigninStyle";
 
 import AppTitle from "../../components/appTitle/AppTitle";
@@ -8,10 +8,25 @@ import AppLink from "../../components/appLink/AppLink";
 import React, { useState } from "react";
 import AppTextFormPassword from "../../components/appTextForm/AppTextFormPassword";
 import AppButtonSignin from "../../components/appButtonSignin/AppButtonRedirect";
+import { setLocalStorageItem } from "../../utils/localStorage";
+import axios from 'axios';
 
 export default function Signin({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSignin = async (email: string, password: string) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/signin', {
+        email,
+        password,
+      });
+      const { userId } = response.data;
+      navigation.navigate('Home', { userId });
+    } catch (error) {
+      Alert.alert('Erro', 'E-mail ou senha incorretos');
+    }
+  };
 
   const isButtonDisabled = !email || !password;
 
@@ -38,8 +53,7 @@ export default function Signin({ navigation }) {
       <AppLink navigation={navigation} route="Signup" text="Não possui conta? Crie agora." />
       <AppButtonSignin
         text="Entrar"
-        navigation={navigation}
-        route="Home"
+        onPress={() => handleSignin(email, password)}
         disabled={isButtonDisabled}
       />
       </View>

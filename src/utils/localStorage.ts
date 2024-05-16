@@ -15,6 +15,18 @@ export const removeLocalStorageItem = async (item: string) => {
   return result;
 };
 
+export const checkAuth = async (navigation: any) => {
+  const token = await getLocalStorageItem('token');
+  if (!token) {
+    navigation.navigate('Signin');
+  }
+};
+
+export const signoutUser = async (navigation: any) => {
+  await removeLocalStorageItem('token');
+  navigation.navigate('Signin');
+};
+
 export const storeData = async (value: {password: string, nomeApp: string}) => {
   try {
     const jsonValue = JSON.stringify(value)
