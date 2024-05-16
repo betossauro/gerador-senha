@@ -20,7 +20,7 @@ export default function AppTextForm({
       placeholder={placeholder}
       value={value}
       editable={editable}
-      placeholderTextColor="white"
+      placeholderTextColor="gray"
       style={styles.input}
       onChangeText={onChangeText}
     />
